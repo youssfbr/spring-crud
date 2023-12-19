@@ -7,7 +7,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,7 +26,16 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody @Valid ProductCreateRequestDTO productCreateRequestDTO) {
-        return ResponseEntity.ok(productService.createProduct(productCreateRequestDTO));
+
+        final ProductResponseDTO productResponseDTO = productService.createProduct(productCreateRequestDTO);
+        final Long id = productResponseDTO.getId();
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(id).toUri();
+
+        return ResponseEntity.created(location).body(productResponseDTO);
     }
 
 }
