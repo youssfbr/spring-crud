@@ -1,5 +1,6 @@
 package com.github.youssfbr.crud.entities;
 
+import com.github.youssfbr.crud.dtos.ProductCreateRequestDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,4 +22,9 @@ public class Product {
     private String name;
 
     private BigDecimal price;
+
+    public Product(ProductCreateRequestDTO productCreateRequestDTO) {
+        name = productCreateRequestDTO.name();
+        price = productCreateRequestDTO.price();
+    }
 }

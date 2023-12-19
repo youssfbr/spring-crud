@@ -1,5 +1,7 @@
 package com.github.youssfbr.crud.services.impl;
 
+import com.github.youssfbr.crud.dtos.ProductCreateRequestDTO;
+import com.github.youssfbr.crud.dtos.ProductResponseDTO;
 import com.github.youssfbr.crud.entities.Product;
 import com.github.youssfbr.crud.repositories.IProductRepository;
 import com.github.youssfbr.crud.services.IProductService;
@@ -17,13 +19,17 @@ public class ProductService implements IProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductResponseDTO> getAllProducts() {
+        return productRepository.findAll().stream()
+                .map(ProductResponseDTO::new)
+                .toList();
     }
 
     @Override
     @Transactional
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
+    public ProductResponseDTO createProduct(ProductCreateRequestDTO productCreateRequestDTO) {
+        final Product productToCreate = new Product(productCreateRequestDTO);
+        final Product productCreated = productRepository.save(productToCreate);
+        return new ProductResponseDTO(productCreated);
     }
 }

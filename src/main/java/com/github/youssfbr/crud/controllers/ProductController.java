@@ -1,7 +1,9 @@
 package com.github.youssfbr.crud.controllers;
 
-import com.github.youssfbr.crud.entities.Product;
+import com.github.youssfbr.crud.dtos.ProductCreateRequestDTO;
+import com.github.youssfbr.crud.dtos.ProductResponseDTO;
 import com.github.youssfbr.crud.services.IProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +18,13 @@ public class ProductController {
     private final IProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.createProduct(product));
+    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody @Valid ProductCreateRequestDTO productCreateRequestDTO) {
+        return ResponseEntity.ok(productService.createProduct(productCreateRequestDTO));
     }
 
 }
