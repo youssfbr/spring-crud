@@ -1,7 +1,9 @@
 package com.github.youssfbr.crud.controllers;
 
 import com.github.youssfbr.crud.dtos.ProductCreateRequestDTO;
+import com.github.youssfbr.crud.dtos.ProductDeleteRequestDTO;
 import com.github.youssfbr.crud.dtos.ProductResponseDTO;
+import com.github.youssfbr.crud.dtos.ProductUpdateRequestDTO;
 import com.github.youssfbr.crud.services.IProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,22 @@ public class ProductController {
                 .buildAndExpand(id).toUri();
 
         return ResponseEntity.created(location).body(productResponseDTO);
+    }
+
+    @PutMapping
+    public ResponseEntity<ProductResponseDTO> updateProduct(@RequestBody @Valid ProductUpdateRequestDTO productUpdateRequestDTO) {
+
+        final ProductResponseDTO productResponseDTO = productService.updateProduct(productUpdateRequestDTO);
+
+        return ResponseEntity.ok(productResponseDTO);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> updateProduct(@RequestBody ProductDeleteRequestDTO productDeleteRequestDTO) {
+
+        productService.deleteProduct(productDeleteRequestDTO);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
