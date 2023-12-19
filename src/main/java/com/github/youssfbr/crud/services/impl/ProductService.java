@@ -20,7 +20,7 @@ import java.util.List;
 public class ProductService implements IProductService {
 
     private final IProductRepository productRepository;
-    private static final String MESSAGE_ID_NOT_FOUND = "Resource not found with ID ";
+    private static final String MESSAGE_ID_NOT_FOUND = "Resource NOT FOUND with ID ";
 
     @Override
     @Transactional(readOnly = true)
