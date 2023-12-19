@@ -20,4 +20,10 @@ public class ProductService implements IProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+    @Override
+    @Transactional
+    public Product createProduct(Product product) {
+        return productRepository.save(product);
+    }
 }
